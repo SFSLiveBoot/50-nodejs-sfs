@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+. "$(dirname "$0")/.common.sh"
+
+: "${yarn_url:=https://yarnpkg.com/latest.tar.gz}"
+: "${yarn_tgz:=$(dl_file "$yarn_url")}"
+: "${yarn_top:=$(tar tfz $yarn_tgz | sed -e 's@^./@@' | cut -f1 -d/ | head -1)}"
+
+tar xfz "$yarn_tgz" -C $DESTDIR/opt/
+ln -s "$yarn_top" "$DESTDIR/opt/yarn"
